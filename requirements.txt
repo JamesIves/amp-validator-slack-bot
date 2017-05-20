@@ -1,0 +1,4 @@
+requests==2.13.0
+pycurl==7.43.0
+slackweb==1.0.5
+APScheduler==3.0.0
