@@ -1,5 +1,5 @@
 # AMP Validator Slack Service
-[![Issues](https://img.shields.io/badge/Read-Blog%20Post-orange.svg)](https://jamesiv.es/adn/amp/2017/03/16/amp-validator-cat.html)
+[![Read the Blog](https://img.shields.io/badge/Read-Blog%20Post-orange.svg)](https://jamesiv.es/adn/amp/2017/03/16/amp-validator-cat.html)
 
 This is a Python webhook service which checks your top performing articles against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/).
 
