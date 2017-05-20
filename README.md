@@ -33,7 +33,6 @@ This application can be executed by running `$ python validate.py`. This will in
 If you're deploying this application locally you can run `$ python schedule.py` which will use the APScheduler package to run the `validate.py` every hour.
 
 
-
 ## Deploying to Heroku
 If you're deploying this application to Heroku you can deploy the build straight from the master branch for continuous deployment. If you'd like to utilize their free dynos you'll need to use [Heroku Scheduler](https://elements.heroku.com/addons/scheduler) add-on to schedule `python validate.py` to run every hour.
 
@@ -50,6 +49,5 @@ This service will alert the specified channel under the following conditions
 * If any AMP document the tests have ran against contain an error that causes it to not validate.
 * If there are four or more articles with AMP errors it will alert the developer team.
 * If no errors are found it will post a confirmation error that the tests have been run.
-* If the API service is not reachable it will alert the developer team.
 
 ![Example](assets/example.png)  
