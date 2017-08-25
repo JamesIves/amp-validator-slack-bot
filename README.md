@@ -60,6 +60,9 @@ The following commands are accepted by the bot.
 
 # Returns the results of the last time the Chartbeat validator ran.
 @bot chartbeat last
+
+# Returns a list of all available commands
+@bot help
 ```
 
 
