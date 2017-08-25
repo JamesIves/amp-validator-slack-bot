@@ -25,7 +25,7 @@ This bot can be deployed to any service such as [Heroku](https://www.heroku.com/
 For Heroku simply deploy the most recent version and assign a dyno to the worker specified in the Procfile, and then scale it.
 
 ```
-Instructions here
+$ heroku ps:scale --app amp-validator-slack-bot worker=1
 ```
 
 For one-click install to Heroku you can use the button below. Please refer to the Configuration portion of the readme for further instructions. 
