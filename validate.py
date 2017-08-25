@@ -52,7 +52,6 @@ def get_amp_path(url):
 
   # Append http:// to each request to make sure it can be read
   if 'https://' not in url and 'http://' not in url:
-    print('didnt find a protocol')
     url = 'http://' + url
 
   try:
