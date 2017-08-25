@@ -1,6 +1,13 @@
 # AMP Validator Slack Bot
 This is a Slack bot built with Python which validates [AMP documents](https://www.ampproject.org/) against the [Cloudflare AMP Validator API](https://blog.cloudflare.com/amp-validator-api/).
 
+## Chartbeat
+If you use Chartbeat you can validate pages that are returned from their API endpoints, this can be especially useful for publications which publish a high volume of content. In order for this to work you must provide a valid endpoint found within your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html).
+
+The bot is also capable of automatically validating against this endpoint at intervals. For instance you can give it an interval value of `60`, and a channel name of `#editors`, which would mean that every hour it would automatically validate the pages returned from Chartbeat, and if an error was found it would publish them to that channel.
+
+For information on how to set these up please refer to the configuration part of this readme. 
+
 
 ## Requirements
 This application requires [Python 2.7.13](https://www.python.org/) and the following packages which can be installed via pip.
@@ -55,10 +62,6 @@ The following commands are accepted by the bot.
 @bot chartbeat last
 ```
 
-## Chartbeat
-If you use Chartbeat you can validate pages that are returned from their API endpoints, this can be especially useful for publications which publish a high volume of content. In order for this to work you must provide a valid endpoint found within your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html) to the associated enviroment variable.
-
-The bot is also capable of automatically validating against this endpoint at intervals, for example if you wanted to make sure your top performing pages are always validated every hour, you could provide the interval enviroment a value of `60`.
 
 ## Feedback & Issues
 Please post any feedback and issues [here](https://github.com/JamesIves/amp-validator-slack-service/issues).
