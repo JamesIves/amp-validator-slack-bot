@@ -1,12 +1,14 @@
 # AMP Validator Slack Bot
-This is a Slack bot built with Python which validates AMP documents articles against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/).
+This is a Slack bot built with Python which validates [AMP documents](https://www.ampproject.org/) articles against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/).
 
 
 ## Requirements
 This application requires [Python 2.7.13](https://www.python.org/) and the following packages which can be installed via pip.
 
 ```
-This is a WIP
+requests==2.13.0
+slackclient==1.0.7
+schedule==0.4.3
 ```
 
 
@@ -45,6 +47,12 @@ The following commands are accepted by the bot.
 ```
 # Validates an AMP document, accepts either a regular page with a valid `amphtml` meta tag, or an amp document.
 @bot validate <url>
+
+# Validates all articles returned from the Chartbeat API. This only works if an endpoint enviroment variable is provided.
+@bot chartbeat validate
+
+# Returns the results of the last time the Chartbeat validator ran.
+@bot chartbeat last
 ```
 
 ## This is a WIP
