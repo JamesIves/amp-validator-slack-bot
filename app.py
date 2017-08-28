@@ -7,7 +7,6 @@ from constants import *
 from validate import *
 from util import *
 
-
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 
 

@@ -6,7 +6,6 @@ from constants import CHARTBEAT_ENDPOINT, CHARTBEAT_OUTPUT_CHANNEL
 from util import *
 from app import send_attachment_message, send_basic_message
 
-
 def validate(article):
     """Sends each article to the Cloudflare AMP validator API"""
     path = 'https://amp.cloudflare.com/q/%s' % article
@@ -55,7 +54,7 @@ def get_amp_path(url):
     url = 'http://' + url
 
   try:
-    document = urlopen(url).read().decode('utf-8')
+    document = urlopen(url).read().replace('\xe2\x9a\xa1', 'amp')
   except IOError:
     return 'invalid'
 

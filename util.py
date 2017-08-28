@@ -1,5 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import re
-
 
 # Keep a running list of errors/passes
 global_store = {
