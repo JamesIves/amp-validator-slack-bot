@@ -6,7 +6,7 @@ If you use Chartbeat you can validate pages that are returned from their API end
 
 The bot is also capable of automatically validating against this endpoint at intervals. For instance you can give it an interval value of `60`, and a channel name of `#editors`, which would mean that every hour it would automatically validate the pages returned from Chartbeat, and if an error was found it would publish them to that channel.
 
-For information on how to set these up please refer to the configuration part of this readme. 
+For information on how to set these up please refer to the Configuration part of this readme. 
 
 
 ## Requirements
@@ -32,13 +32,13 @@ $ heroku ps:scale --app amp-validator-slack-bot worker=1
 For one-click install to Heroku you can use the button below. Please refer to the Configuration portion of the readme for further instructions. 
 
 ## Configuration
-There are a number of required enviroment variables required in order to power this bot, some which are required, and some which are optional. If you're deploying the bot to Heroku you'll need to go to the `Settings` tab of the application and click `Reveal Config Vars` and replace or add the fields depending on your chosen method of installaton.
+There are a number of enviroment variables needed in order to power this bot, some which are required, and some which are optional. If you're deploying the bot to Heroku you'll need to go to the `Settings` tab of the application and click `Reveal Config Vars` and replace or add the fields depending on your chosen method of installaton.
 
 
 | Key  | Value Information | Required |
 | ------------- | ------------- | ------------- |
 | `BOT_ID`  | The ID of your Slack bot user, this is required so the bot knows when a command is directed at it. If you're unsure what your bot ID is you can run `bot_id.py` which will print the ID, you'll need to make sure that the `BOT_NAME` field within the file corresponds with the one you setup in the Slack interface.  | **Yes** |
-| `SLACK_BOT_TOKEN`  | The bot token found within the Slack API settings.  | **Yes** |
+| `SLACK_BOT_TOKEN`  | The bot token found within the [Slack API settings](https://api.slack.com/bot-users).  | **Yes** |
 | `CHARTBEAT_ENDPOINT`  | If you run Chartbeat analytics you can test your top performing pages against the Chartbeat API. This field requires an endpoint that you can find in your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html), for more information see the Chartbeat part of this readme.   | **Optional**  |
 | `CHARTBEAT_INTERVAL_TIME`  | If you'd like to periodically check the pages returned from the Chartbeat API without any user input you can enter an interval time for it to do so. This will silently check the pages and only alert if an error is found. Requires `CHARTBEAT_OUTPUT_CHANNEL` and `CHARTBEAT_ENDPOINT` to be entered for this to function. Requires a numeric value, for example `60` for 60 minutes. | **Optional** |
 | `CHARTBEAT_OUTPUT_CHANNEL`  | If you'd like the interval check to work you need to enter a channel in order for errors to be logged to. Please see the [Slack API documentation on how to format this](https://api.slack.com/methods/chat.postMessage#channels). | **Optional** |
@@ -69,5 +69,6 @@ The following commands are accepted by the bot.
 
 ## Feedback & Issues
 Please post any feedback, requests or issues [here](https://github.com/JamesIves/amp-validator-slack-service/issues).
+
 
 ![Example](assets/example.png)
