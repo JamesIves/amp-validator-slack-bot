@@ -7,7 +7,7 @@
     "slack",
     "slack-bot",
     "cloudflare",
-    "cloudflare-api"
+    "cloudflare-api",
     "cloudflare-amp-validator",
     "amp",
     "google-amp",
