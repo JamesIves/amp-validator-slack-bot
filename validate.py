@@ -1,110 +1,143 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from settings import SLACK_WEBHOOK_PATH
-from settings import ARTICLE_LIST_PATH
-import sys
 import requests
-import json
-import slackweb
-
-# Slack Webhook URL: This is found in the Slack team settings
-slack = slackweb.Slack(url=SLACK_WEBHOOK_PATH)
-
-# Error/Pass counts
-errors = 0
-passes = 0
-
-def passed():
-    """Incriments the passes counter if an article passes validation"""
-    global passes
-    passes = passes + 1
-
-
-def failed(article):
-    """If an article fails validation send a payload to Slack with the information"""
-    global errors
-    global time
-    errors = errors + 1
-    article_source = article['source']
-    article_errors = article['errors']
-
-    # Loops over all errors in the object
-    for error in article_errors:
-        reason = error['error']
-        line = str(error['line'])
-        code = error['code']
-
-        if code != 'WARNING_TAG_REQUIRED_BY_MISSING':
-            attachments = []
-            attachment = {"fallback": "AMP Error found on line %s for article %s - %s - %s" % (line, article_source, reason, code), "title": "AMP Error Found: %s :x:" % (code), "title_link": "%s" % (article_source), "color": "#ff0000", "pretext": "An AMP error has been located on line %s. This error is causing the AMP document to not validate. If you're unsure how to resolve this error please refer to a developer. The next test will run in one hour." % (line), "text": "%s" % (reason), "footer": "News Organization", "footer_icon": "https://www.ampproject.org/static/img/amp_favicon.png?v=3"}
-            attachments.append(attachment)
-            slack.notify(attachments=attachments)
-
-    print 'The following article object failed validation --  %s' % article
-
+import re
+from urllib import urlopen
+from lxml import etree
+from constants import CHARTBEAT_ENDPOINT, CHARTBEAT_OUTPUT_CHANNEL
+from util import *
+from app import send_attachment_message, send_basic_message
 
 def validate(article):
     """Sends each article to the Cloudflare AMP validator API"""
     path = 'https://amp.cloudflare.com/q/%s' % article
-    request = requests.get(path)
+    
+    try:
+      request = requests.get(path)
+      request.raise_for_status()
+    except requests.exceptions.RequestException as error:
+      return 'error'
+
     document = request.json()
 
     # Fires pass/fail depending on the response from the API
-    if document['valid'] == True:
-        passed()
+    if document['valid'] is True:
+      return {
+        'article': document['source'],
+        'valid': document['valid'],
+        'message': 'Article Passed Validation',
+      }
 
-    if document['valid'] == False:
-        failed(document)
+    if document['valid'] is False:
+      for error in document['errors']:
+          reason = error['error']
+          line = str(error['line'])
+          code = error['code']
+          
+      return {
+        'article': document['source'],
+        'valid': document['valid'],
+        'reason': reason,
+        'line': line,
+        'code': code,
+        'message': 'Article Failed Validation',
+      }
 
 
-def getArticles():
-    """Gets a list of articles from the most-read endpoint"""
+def get_amp_path(url):
+  """
+    Attempts to read the `amphtml` meta tag in a html document to get
+    the path to a valid amp document. If the document is already an amp
+    document it passes through to the validate function.
+  """
 
-    # Makes sure that requests is able to get data and if not throw an exception
+  # Append http:// to each request to make sure it can be read
+  if 'https://' not in url and 'http://' not in url:
+    url = 'http://' + url
+
+  try:
+    document = urlopen(url).read().replace('\xe2\x9a\xa1', 'amp')
+  except IOError:
+    return 'invalid'
+
+  tree = etree.HTML(document)
+  html_attributes = tree.attrib
+
+  if 'amp' in html_attributes.keys():
+    # If amp is in the html attributes assume it's an AMP document
+    path = url
+
+  else: 
+    # Otherwise read the link tag and return the amphtml attribute
     try:
-        request = requests.get(ARTICLE_LIST_PATH)
-        request.raise_for_status()
+      path = tree.xpath("//link[@rel='amphtml']")[0].get('href')
+    except IndexError:
+      return 'notfound'
+
+  # Clean the string so it can be passed to the validator
+  amp_path = re.sub('http?:\/\/|https?:\/\/|www\.', '', path)
+
+  return amp_path
+
+
+def validate_chartbeat_articles():
+    """
+      Validates the top articles provided from the
+      Chartbeat API. Requires the Chartbeat endpoint
+      to be populated in the constants file.
+    """
+    validated_articles = []
+
+    try:
+      request = requests.get(CHARTBEAT_ENDPOINT)
+      request.raise_for_status()
 
     except requests.exceptions.RequestException as error:
-        attachments = []
-        attachment = {"fallback": "Unexpected Error Occured", "title": "Something serious went wrong. The validator was unable to reach the Chartbeat service and therefore could not check AMP validation. Alerting the @developers", "color": "#ffff00", "text": "%s" % (error), "footer": "News Organization", "footer_icon": "https://www.ampproject.org/static/img/amp_favicon.png?v=3"}
-        attachments.append(attachment)
-        slack.notify(attachments=attachments)
-        print error
-        sys.exit(1)
+      send_basic_message('There was an issue reaching the Chartbeat service: ```%s```' % (error), global_store['channel'])
+      return 'error'
+    
+    response = request.json()
+    
+    for page in response['pages']:
+      page_path = page['path']
+      amp_path = get_amp_path(page_path)
 
-    # If no status error was found assume it was a 200
-    # REPLACE: Modify the 'content_elements' label to match the array which contains your list of top articles
-    request_json = request.json()
-    for article in request_json['content_elements']:
-        canonical_url = article['canonical_url']
-        # REPLACE: Use %s to build a template for your AMP URL's. (This builds the path before it gets given to Cloudflare)
-        amp_url = 'example.com%s?outputType=amp-type' % canonical_url
-        validate(amp_url)
-
-
-def confirm():
-    """If there are no AMP errors found alert the Slack channel and remind them that the next test will run in an hour (Based on schedule)"""
-    global errors
-    global passes
-    articles = str(passes)
-
-    if errors == 0:
-        attachments = []
-        attachment = {"fallback": "The validator tested the top %s articles and found no errors. The next test will run in one hour." % (articles), "title": "No AMP Errors Found :beers:", "color": "#32CD32", "text": "The AMP validator tested against the top %s articles according to Chartbeat and found no errors. The next test will run in one hour." % (articles), "footer": "News Organization", "footer_icon": "https://www.ampproject.org/static/img/amp_favicon.png?v=3"}
-        attachments.append(attachment)
-        slack.notify(attachments=attachments)
-        print 'All articles validated succesfully'
-
-    # If a large amount of errors are found send an alert to the developer team
-    if errors >= 4:
-        attachments = []
-        attachment = {"fallback": "The validator has detected a large amount of errors", "title": "The validator has detected a large amount of AMP errors!", "color": "#ffa500", "pretext": "@developers", "text": "Due to the large amount of errors detected the developer team has been alerted. The next test will run in one hour.", "footer": "News Organization", "footer_icon": "https://www.ampproject.org/static/img/amp_favicon.png?v=3"}
-        attachments.append(attachment)
-        slack.notify(attachments=attachments)
-        print 'Large amount of AMP errors detected'
+      if amp_path != 'notfound' and amp_path != 'invalid':
+        validated_article = validate(amp_path)
+        validated_articles.append(validated_article)
+  
+    return total_articles(validated_articles)
 
 
-# Init Application
-getArticles()
-confirm()
+def total_articles(validated_articles):
+    passes = 0
+    errors = 0
+
+    # Tally each pass, only post a message if it's a failure.
+    for article in validated_articles:
+        if article['valid'] is True:
+            passes = passes + 1
+
+        if article['valid'] is False:
+            errors = errors + 1
+            send_attachment_message(article, global_store['channel'])
+    
+    update_passes(passes)
+    update_errors(errors)
+
+    total = {
+      'errors': errors,
+      'passes': passes
+    }
+    
+    return total
+
+
+def validate_chartbeat_schedule():
+  """
+    Scheduler task for Chartbeat testing
+    if the configuration is setup correctly
+  """
+  if CHARTBEAT_OUTPUT_CHANNEL:
+    update_channel(CHARTBEAT_OUTPUT_CHANNEL)
+    validate_chartbeat_articles()
+
+  return
