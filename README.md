@@ -16,6 +16,7 @@ This application requires [Python 2.7.13](https://www.python.org/) and the follo
 requests==2.13.0
 slackclient==1.0.7
 schedule==0.4.3
+lxml==3.7.3
 ```
 
 
@@ -68,3 +69,5 @@ The following commands are accepted by the bot.
 
 ## Feedback & Issues
 Please post any feedback, requests or issues [here](https://github.com/JamesIves/amp-validator-slack-service/issues).
+
+![Example](assets/example.png)
