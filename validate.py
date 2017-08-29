@@ -4,7 +4,7 @@ import requests
 import re
 from urllib import urlopen
 from lxml import etree
-from constants import CHARTBEAT_ENDPOINT, CHARTBEAT_OUTPUT_CHANNEL
+from constants import *
 from util import *
 from app import send_attachment_message, send_basic_message
 
@@ -139,7 +139,7 @@ def validate_chartbeat_schedule():
     Scheduler task for Chartbeat testing
     if the configuration is setup correctly
   """
-  if CHARTBEAT_OUTPUT_CHANNEL is not None:
+  if 'CHARTBEAT_OUTPUT_CHANNEL' in os.environ:
     update_channel(CHARTBEAT_OUTPUT_CHANNEL)
     validate_chartbeat_articles()
 
