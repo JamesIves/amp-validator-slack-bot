@@ -47,7 +47,7 @@ def handle_command(command, channel):
                 send_basic_message('Validated %s articles and found %s errors.' % (total['errors'] + total['passes'], total['errors']), channel)
 
         else:
-            send_basic_message('Chartbeat is not properly configured, please refer to the documentation...', channel)
+            send_basic_message('Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat', channel)
 
     if command.startswith(VALIDATE_CHARTBEAT_LAST_COMMAND):
         # Provides the results of the most recent Chartbeat check
@@ -58,7 +58,7 @@ def handle_command(command, channel):
             send_basic_message('The last time I ran I checked %s articles and found %s errors.' % (errors + passes, errors), channel)
 
         else:
-            send_basic_message('Chartbeat is not properly configured, please refer to the documentation...', channel)
+            send_basic_message('Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat', channel)
 
     if command.startswith(HELP_COMMAND):
         payload = [
