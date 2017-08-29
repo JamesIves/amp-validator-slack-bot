@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os
 from constants import SLACK_BOT_TOKEN
 from slackclient import SlackClient
 
@@ -16,6 +15,10 @@ if __name__ == "__main__":
 
         for user in users:
             if 'name' in user and user.get('name') == BOT_NAME:
-                print("The BOT_ID token for " + user['name'] + "' is " + user.get('id'))
+                print(
+                    "The BOT_ID token for " +
+                    user['name'] +
+                    "' is " +
+                    user.get('id'))
     else:
-        print("Unable to find a user with the name " + BOT_NAME)
+        print("Unable to find a user with the name " + BOT_NAME + ' or you are mising a Slack token.')

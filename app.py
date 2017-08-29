@@ -3,8 +3,8 @@
 import time
 import schedule
 from slackclient import SlackClient
-from constants import *
 from validate import *
+from constants import *
 from util import *
 
 slack_client = SlackClient(SLACK_BOT_TOKEN)
@@ -21,16 +21,20 @@ def handle_command(command, channel):
         amp_url = get_amp_path(url)
 
         if amp_url == 'invalid':
-            send_basic_message('Either the URL you included was invalid or there wasn issue reading the address.', channel)
+            send_basic_message(
+                'Either the URL you included was invalid or there wasn issue reading the address.',
+                channel)
 
         if amp_url == 'notfound':
-            send_basic_message('An AMP document could be found at the provided address', channel)
+            send_basic_message(
+                'An AMP document could be found at the provided address', channel)
 
         else:
             amp_validation_results = validate(amp_url)
-            
+
             if amp_validation_results == 'error':
-                send_basic_message('Unable to reach the Cloudflare service, please try again', channel)
+                send_basic_message(
+                    'Unable to reach the Cloudflare service, please try again', channel)
 
             else:
                 send_attachment_message(amp_validation_results, channel)
@@ -39,15 +43,21 @@ def handle_command(command, channel):
         # Validates the most recent articles from Chartbeat
         if 'CHARTBEAT_ENDPOINT' in os.environ:
             update_channel(channel)
-            send_basic_message('Validating the top performing pages from Chartbeat, this may take a moment...', channel)
+            send_basic_message(
+                'Validating the top performing pages from Chartbeat, this may take a moment...',
+                channel)
             total = validate_chartbeat_articles()
 
             # Error handling, makes sure that
             if total is not 'error':
-                send_basic_message('Validated %s articles and found %s errors.' % (total['errors'] + total['passes'], total['errors']), channel)
+                send_basic_message(
+                    'Validated %s articles and found %s errors.' %
+                    (total['errors'] + total['passes'], total['errors']), channel)
 
         else:
-            send_basic_message('Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat', channel)
+            send_basic_message(
+                'Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat',
+                channel)
 
     if command.startswith(VALIDATE_CHARTBEAT_LAST_COMMAND):
         # Provides the results of the most recent Chartbeat check
@@ -55,10 +65,14 @@ def handle_command(command, channel):
         passes = get_passes()
 
         if 'CHARTBEAT_ENDPOINT' in os.environ:
-            send_basic_message('The last time I ran I checked %s articles and found %s errors.' % (errors + passes, errors), channel)
+            send_basic_message(
+                'The last time I ran I checked %s articles and found %s errors.' %
+                (errors + passes, errors), channel)
 
         else:
-            send_basic_message('Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat', channel)
+            send_basic_message(
+                'Chartbeat is not properly configured, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat',
+                channel)
 
     if command.startswith(HELP_COMMAND):
         payload = [
@@ -93,7 +107,7 @@ def handle_command(command, channel):
                 "ts": int(time.time())
             }
         ]
-        
+
         send_attachment_message(payload, channel)
 
 
@@ -126,7 +140,7 @@ def send_attachment_message(data, channel):
             # Sends an invalid message payload
             payload = [
                 {
-                    "fallback": "AMP Error found on line %s for article %s - %s - %s" % (data['line'], data['article'], data['reason'], data['code']), 
+                    "fallback": "AMP Error found on line %s for article %s - %s - %s" % (data['line'], data['article'], data['reason'], data['code']),
                     "color": "#ff0000",
                     "author_name": "AMP Validator",
                     "author_link": "https://validator.ampproject.org/",
@@ -142,16 +156,15 @@ def send_attachment_message(data, channel):
 
     else:
         payload = data
-    
 
     slack_client.api_call("chat.postMessage", channel=channel,
-            attachments=payload, as_user=True)
+                          attachments=payload, as_user=True)
 
 
 def send_basic_message(message, channel):
     """ Sends a basic message with the Slack API """
     slack_client.api_call("chat.postMessage", channel=channel,
-            text=message, as_user=True)
+                          text=message, as_user=True)
 
 
 def parse_slack_output(slack_rtm_output):
@@ -166,7 +179,7 @@ def parse_slack_output(slack_rtm_output):
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
                 return output['text'].split(AT_BOT)[1].strip(), \
-                       output['channel']
+                    output['channel']
     return None, None
 
 
@@ -176,9 +189,10 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
         # Check if interval checking is setup, otherwise inform the user.
         if ('CHARTBEAT_ENDPOINT' and 'CHARTBEAT_INTERVAL_TIMER' and 'CHARTBEAT_OUTPUT_CHANNEL') in os.environ:
-            schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(validate_chartbeat_schedule)
+            schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(
+                validate_chartbeat_schedule)
 
-        else: 
+        else:
             print('Chartbeat data cannot be found, please refer to the documentation: https://github.com/JamesIves/amp-validator-slack-bot#chartbeat')
 
         print('Launch succesful, waiting for input...')
