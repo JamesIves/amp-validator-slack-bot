@@ -44,7 +44,7 @@ def handle_command(command, channel):
         if 'CHARTBEAT_ENDPOINT' in os.environ:
             update_channel(channel)
             send_basic_message(
-                'Validating the top performing pages from Chartbeat, this may take a moment...',
+                'Validating pages provided by Chartbeat, this may take a moment...',
                 channel)
             total = validate_chartbeat_articles()
 
