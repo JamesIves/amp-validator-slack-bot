@@ -39,7 +39,7 @@ def handle_command(command, channel):
         # Validates the most recent articles from Chartbeat
         if 'CHARTBEAT_ENDPOINT' in os.environ:
             update_channel(channel)
-            send_basic_message('Validating the top performing articles from Chartbeat, this may take a moment...', channel)
+            send_basic_message('Validating the top performing pages from Chartbeat, this may take a moment...', channel)
             total = validate_chartbeat_articles()
 
             # Error handling, makes sure that
@@ -88,9 +88,8 @@ def handle_command(command, channel):
                         "short": "false"
                     }
                 ],
-                "thumb_url": "http://i.imgur.com/0IXuhlZ.png",
                 "footer": "https://github.com/JamesIves/amp-validator-slack-service",
-                "footer_icon": "http://i.imgur.com/0IXuhlZ.png",
+                "footer_icon": "https://raw.githubusercontent.com/JamesIves/amp-validator-slack-bot/master/assets/footer_icon.png",
                 "ts": int(time.time())
             }
         ]
@@ -113,12 +112,12 @@ def send_attachment_message(data, channel):
                     "color": "#32CD32",
                     "author_name": "AMP Validator",
                     "author_link": "https://validator.ampproject.org/",
-                    "author_icon": "http://i.imgur.com/1o63W1s.png",
+                    "author_icon": "https://raw.githubusercontent.com/JamesIves/amp-validator-slack-bot/master/assets/amp_valid.png",
                     "title": "No AMP Errors Found :beers:",
                     "title_link": "%s" % (data['article']),
                     "text": "The provided document came back with no validation errors. :tada:",
                     "footer": "https://github.com/JamesIves/amp-validator-slack-service",
-                    "footer_icon": "http://i.imgur.com/0IXuhlZ.png",
+                    "footer_icon": "https://raw.githubusercontent.com/JamesIves/amp-validator-slack-bot/master/assets/footer_icon.png",
                     "ts": ts
                 }
             ]
@@ -131,7 +130,7 @@ def send_attachment_message(data, channel):
                     "color": "#ff0000",
                     "author_name": "AMP Validator",
                     "author_link": "https://validator.ampproject.org/",
-                    "author_icon": "http://i.imgur.com/THkGPdN.png",
+                    "author_icon": "https://raw.githubusercontent.com/JamesIves/amp-validator-slack-bot/master/assets/amp_invalid.png",
                     "title": "%s on line %s! :x:" % (data['code'], data['line']),
                     "title_link": "%s" % (data['article']),
                     "text": "%s" % (data['reason']),
@@ -192,4 +191,4 @@ if __name__ == "__main__":
                 handle_command(command, channel)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
-        print("Connection failed. Invalid Slack token or bot ID?")
+        print("Connection failed. This is likely due to an invalid Slack token or Bot ID.")
