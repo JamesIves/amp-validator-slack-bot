@@ -83,7 +83,7 @@ def handle_command(command, channel):
                 "author_name": "James Ives",
                 "author_link": "https://jamesiv.es",
                 "title": "AMP Validator",
-                "title_link": "https://api.slack.com/",
+                "title_link": "https://validator.ampproject.org/",
                 "text": "The following commands are available.",
                 "fields": [
                     {
