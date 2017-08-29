@@ -179,7 +179,7 @@ if __name__ == "__main__":
         # Check if interval checking is setup, otherwise inform the user.
         if CHARTBEAT_ENDPOINT != '' and CHARTBEAT_OUTPUT_CHANNEL != '' and CHARTBEAT_INTERVAL_TIME != '':
 
-            if CHARTBEAT_INTERVAL_TIME = '':
+            if CHARTBEAT_INTERVAL_TIME == '':
                 CHARTBEAT_INTERVAL_TIME = '0'
 
             schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(validate_chartbeat_schedule)
