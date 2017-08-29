@@ -1,4 +1,6 @@
 # AMP Validator Slack Bot
+[![Build Status](https://travis-ci.org/JamesIves/amp-validator-slack-bot.svg?branch=master)](https://travis-ci.org/JamesIves/amp-validator-slack-bot) [![Issues](https://img.shields.io/github/issues/JamesIves/amp-validator-slack-bot.svg)](https://github.com/JamesIves/amp-validator-slack-bot/issues)
+
 This is a Slack bot built with Python which validates [AMP documents](https://www.ampproject.org/) against the [Cloudflare AMP Validator API](https://blog.cloudflare.com/amp-validator-api/).
 
 ## Chartbeat
@@ -30,6 +32,8 @@ $ heroku ps:scale --app amp-validator-slack-bot worker=1
 ```
 
 For one-click install to Heroku you can use the button below. Please refer to the Configuration portion of the readme for further instructions. 
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/JamesIves/amp-validator-slack-bot/master)
 
 ## Configuration
 There are a number of enviroment variables needed in order to power this bot, some which are required, and some which are optional. If you're deploying the bot to Heroku you'll need to go to the `Settings` tab of the application and click `Reveal Config Vars` and replace or add the fields depending on your chosen method of installaton.
