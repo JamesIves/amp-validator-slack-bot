@@ -48,7 +48,7 @@ def handle_command(command, channel):
                 channel)
             total = validate_chartbeat_articles()
 
-            # Error handling, makes sure that
+            # Error handling
             if total is not 'error':
                 send_basic_message(
                     'Validated %s articles and found %s errors.' %
@@ -60,7 +60,7 @@ def handle_command(command, channel):
                 channel)
 
     if command.startswith(VALIDATE_CHARTBEAT_LAST_COMMAND):
-        # Provides the results of the most recent Chartbeat check
+        # Provides the results of the most recent Chartbeat check.
         errors = get_errors()
         passes = get_passes()
 
@@ -169,9 +169,8 @@ def send_basic_message(message, channel):
 
 def parse_slack_output(slack_rtm_output):
     """
-        The Slack Real Time Messaging API is an events firehose.
-        this parsing function returns None unless a message is
-        directed at the Bot, based on its ID.
+        Returns None unless a message is directed at the bot
+        based on its ID.
     """
     output_list = slack_rtm_output
     if output_list and len(output_list) > 0:
