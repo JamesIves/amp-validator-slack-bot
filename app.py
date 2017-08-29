@@ -178,7 +178,8 @@ if __name__ == "__main__":
 
         # Check if interval checking is setup, otherwise inform the user.
         if CHARTBEAT_ENDPOINT and CHARTBEAT_OUTPUT_CHANNEL and CHARTBEAT_INTERVAL_TIME:
-            schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(validate_chartbeat_schedule)
+            print('This is on')
+            schedule.every(CHARTBEAT_INTERVAL_TIME).minutes.do(validate_chartbeat_schedule)
 
         else: 
             print('Chartbeat data cannot be found, please refer to the documentation.')
