@@ -56,6 +56,7 @@ def get_amp_path(url):
     url = 'http://' + url
 
   try:
+    # Replaces the unicode lightning bolt symbol used by amp with the amp keyword
     document = urlopen(url).read().replace('\xe2\x9a\xa1', 'amp')
   except IOError:
     return 'invalid'
@@ -93,7 +94,7 @@ def validate_chartbeat_articles():
       request.raise_for_status()
 
     except requests.exceptions.RequestException as error:
-      send_basic_message('There was an issue reaching the Chartbeat service: ```%s```' % (error), global_store['channel'])
+      send_basic_message('There was an issue reaching the Chartbeat service.' % (error), global_store['channel'])
       return 'error'
     
     response = request.json()
@@ -138,7 +139,7 @@ def validate_chartbeat_schedule():
     Scheduler task for Chartbeat testing
     if the configuration is setup correctly
   """
-  if CHARTBEAT_OUTPUT_CHANNEL:
+  if CHARTBEAT_OUTPUT_CHANNEL != '':
     update_channel(CHARTBEAT_OUTPUT_CHANNEL)
     validate_chartbeat_articles()
 

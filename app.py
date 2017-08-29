@@ -37,7 +37,7 @@ def handle_command(command, channel):
 
     if command.startswith(VALIDATE_CHARTBEAT_COMMAND):
         # Validates the most recent articles from Chartbeat
-        if CHARTBEAT_ENDPOINT:
+        if CHARTBEAT_ENDPOINT != '':
             update_channel(channel)
             send_basic_message('Validating the top performing articles from Chartbeat, this may take a moment...', channel)
             total = validate_chartbeat_articles()
@@ -54,7 +54,7 @@ def handle_command(command, channel):
         errors = get_errors()
         passes = get_passes()
 
-        if CHARTBEAT_ENDPOINT:
+        if CHARTBEAT_ENDPOINT != '':
             send_basic_message('The last time I ran I checked %s articles and found %s errors.' % (errors + passes, errors), channel)
 
         else:
