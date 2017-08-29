@@ -37,7 +37,7 @@ def handle_command(command, channel):
 
     if command.startswith(VALIDATE_CHARTBEAT_COMMAND):
         # Validates the most recent articles from Chartbeat
-        if CHARTBEAT_ENDPOINT != '':
+        if CHARTBEAT_ENDPOINT is not None:
             update_channel(channel)
             send_basic_message('Validating the top performing articles from Chartbeat, this may take a moment...', channel)
             total = validate_chartbeat_articles()
@@ -54,7 +54,7 @@ def handle_command(command, channel):
         errors = get_errors()
         passes = get_passes()
 
-        if CHARTBEAT_ENDPOINT != '':
+        if CHARTBEAT_ENDPOINT is not None:
             send_basic_message('The last time I ran I checked %s articles and found %s errors.' % (errors + passes, errors), channel)
 
         else:
@@ -177,9 +177,9 @@ if __name__ == "__main__":
     if slack_client.rtm_connect():
 
         # Check if interval checking is setup, otherwise inform the user.
-        if CHARTBEAT_ENDPOINT != '' and CHARTBEAT_OUTPUT_CHANNEL != '':
+        if CHARTBEAT_ENDPOINT is not None and CHARTBEAT_OUTPUT_CHANNEL is not None and CHARTBEAT_INTERVAL_TIME is not None:
 
-            schedule.every(60).minutes.do(validate_chartbeat_schedule)
+            schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(validate_chartbeat_schedule)
 
         else: 
             print('Chartbeat data cannot be found, please refer to the documentation.')

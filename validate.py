@@ -139,7 +139,7 @@ def validate_chartbeat_schedule():
     Scheduler task for Chartbeat testing
     if the configuration is setup correctly
   """
-  if CHARTBEAT_OUTPUT_CHANNEL != '':
+  if CHARTBEAT_OUTPUT_CHANNEL is not None:
     update_channel(CHARTBEAT_OUTPUT_CHANNEL)
     validate_chartbeat_articles()
 
