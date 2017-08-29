@@ -175,10 +175,11 @@ if __name__ == "__main__":
     READ_WEBSOCKET_DELAY = 1
 
     if slack_client.rtm_connect():
-
+        print(CHARTBEAT_ENDPOINT)
+        print(CHARTBEAT_OUTPUT_CHANNEL)
+        print(CHARTBEAT_INTERVAL_TIME)
         # Check if interval checking is setup, otherwise inform the user.
-        if CHARTBEAT_ENDPOINT is not None and CHARTBEAT_OUTPUT_CHANNEL is not None and CHARTBEAT_INTERVAL_TIME is not None:
-
+        if ("CHARTBEAT_ENDPOINT" and "CHARTBEAT_INTERVAL_TIMER" and "CHARTBEAT_OUTPUT_CHANNEL") in os.environ:
             schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(validate_chartbeat_schedule)
 
         else: 
