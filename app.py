@@ -18,15 +18,21 @@ def handle_command(command, channel):
     if command.startswith(VALIDATE_COMMAND):
         # Validates an individual AMP document.
         url = get_target_path(command)
+
+        if url == 'notfound':
+            return send_basic_message(
+                'No URL provided, the correct formatting is validate followed by a valid path.',
+                channel)
+
         amp_url = get_amp_path(url)
 
         if amp_url == 'invalid':
-            send_basic_message(
-                'Either the URL you included was invalid or there wasn issue reading the address.',
+            return send_basic_message(
+                'Either the URL you included was invalid or there was an issue reading the address.',
                 channel)
 
         if amp_url == 'notfound':
-            send_basic_message(
+            return send_basic_message(
                 'An AMP document could be found at the provided address', channel)
 
         else:
@@ -117,7 +123,6 @@ def send_attachment_message(data, channel):
     payload = data
 
     if 'valid' in data:
-        print('found valid')
         if data['valid'] is True:
             # Sends a valid message payload
             payload = [

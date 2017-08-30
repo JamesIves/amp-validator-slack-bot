@@ -42,7 +42,11 @@ def get_channel():
 
 def get_target_path(message):
   """ Splits a URL string from Slack """
-  url = message.split(' ', 1)[1]
+  try:
+    url = message.split(' ', 1)[1]
+  except IndexError:
+    return 'notfound'
+
   url = url.split('|')[0]
   formatted_url = re.sub('\<|\>', '', url)
 
