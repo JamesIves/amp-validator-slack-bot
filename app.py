@@ -192,7 +192,8 @@ if __name__ == "__main__":
 
     if slack_client.rtm_connect():
         # Check if interval checking is setup, otherwise inform the user.
-        if ('CHARTBEAT_ENDPOINT' and 'CHARTBEAT_INTERVAL_TIMER' and 'CHARTBEAT_OUTPUT_CHANNEL') in os.environ:
+        if ('CHARTBEAT_ENDPOINT' and 'CHARTBEAT_INTERVAL_TIME' and 'CHARTBEAT_OUTPUT_CHANNEL') in os.environ:
+            print('Chartbeat is configured and will run every %s' % (CHARTBEAT_INTERVAL_TIME))
             schedule.every(int(CHARTBEAT_INTERVAL_TIME)).minutes.do(
                 validate_chartbeat_schedule)
 
