@@ -33,7 +33,7 @@ def handle_command(command, channel):
 
         if amp_url == 'notfound':
             return send_basic_message(
-                'An AMP document could be found at the provided address', channel)
+                'An AMP document could not be found at the provided address', channel)
 
         else:
             amp_validation_results = validate(amp_url)
