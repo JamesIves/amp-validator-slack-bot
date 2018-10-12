@@ -38,7 +38,7 @@ For information on how to set these up please refer to the Configuration part of
 
 
 ## Configuration
-There are a number of environment variables needed in order to power this bot, some which are required, and some which are optional. If you're deploying the bot to Heroku you'll need to go to the `Settings` tab of the application and click `Reveal Config Vars` and replace or add the fields depending on your chosen method of installaton.
+There are a number of environment variables needed in order to power this bot, some which are required, and some which are optional. If you're deploying the bot to Heroku you'll need to go to the `Settings` tab of the application and click `Reveal Config Vars` and replace or add the fields depending on your chosen method of installation.
 
 
 | Key  | Value Information | Required |
