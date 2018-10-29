@@ -1,8 +1,8 @@
-{
-  "name": "AMP Validator Slack Bot",
-  "description": "Slack bot which validates AMP articles against the Cloudflare AMP Validator API.",
-  "repository": "https://github.com/JamesIves/amp-validator-slack-bot",
-  "keywords": [
+{  
+  "name":"AMP Validator Slack Bot",
+  "description":"Slack bot which validates AMP articles against the Cloudflare AMP Validator API.",
+  "repository":"https://github.com/JamesIves/amp-validator-slack-bot",
+  "keywords":[  
     "python",
     "slack",
     "slack-bot",
@@ -13,17 +13,16 @@
     "google-amp",
     "amp-validator",
     "chartbeat"
-    ],
-    "website": "https://jamesiv.es",
-    "env": {
-      "BOT_ID": {
-        "description": "The ID of your Slack bot user, this is required so the bot knows when a command is directed at it. If you're unsure what your bot ID is you can run bot_id.py which will print the ID, you'll need to make sure that the BOT_NAME field within the file corresponds with the one you setup in the Slack interface.",
-        "value": "replace_me"
-      },
-      "SLACK_BOT_TOKEN": {
-        "description": "The bot token found within the Slack API settings.",
-        "value": "replace_me"
-      }  
+  ],
+  "website":"https://jamesiv.es",
+  "env":{  
+    "BOT_ID":{  
+        "description":"The ID of your Slack bot user, this is required so the bot knows when a command is directed at it. If you're unsure what your bot ID is you can run bot_id.py which will print the ID, you'll need to make sure that the BOT_NAME field within the file corresponds with the one you setup in the Slack interface.",
+        "value":"replace_me"
+    },
+    "SLACK_BOT_TOKEN":{  
+        "description":"The bot token found within the Slack API settings.",
+        "value":"replace_me"
     }
   }
 }
