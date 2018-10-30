@@ -8,7 +8,7 @@ This is a Slack bot built with Python which validates [AMP documents](https://ww
 This application requires [Python 2.7.13](https://www.python.org/) and the following packages which can be installed via pip.
 
 ```
-requests==2.13.0
+requests==2.20.0
 slackclient==1.0.7
 schedule==0.4.3
 lxml==3.7.3
