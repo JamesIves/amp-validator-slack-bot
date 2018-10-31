@@ -3,7 +3,7 @@
 
 With this Slack bot you can validate [AMP documents](https://www.ampproject.org/) against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/). You can also validate your top performing pages according to Chartbeat on a timer to ensure your most popular content is making its way to the AMP cache.
 
-## Installation Steps
+## Installation Steps 💽
 1. Visit your organizations [Slack API settings](https://api.slack.com/) and create a new application with a bot user and retrieve the bots access token.
 2. Click the button below and enter the required fields to deploy the bot to [Heroku](http://heroku.com). If the required tokens were provided correctly the bot should appear online within Slack and begin responding to commands. You can get a full explanation of each setting within the configuration portion of this readme. 
 
