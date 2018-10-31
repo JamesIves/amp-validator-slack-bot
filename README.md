@@ -12,7 +12,7 @@ With this Slack bot you can validate [AMP documents](https://www.ampproject.org/
 
 ---
 
-If you'd like to run the application outside of [Heroku](http://heroku.com) you can run add the required [configuration options](#configurations) as environment variables and then run the following commands using [Python](https://www.python.org/) and [Pip](https://pypi.org/project/pip/).
+If you'd like to run the application outside of [Heroku](http://heroku.com) you can run add the required [configuration options](#configuration-file_folder) as environment variables and then run the following commands using [Python](https://www.python.org/) and [Pip](https://pypi.org/project/pip/).
 
 ```
 # Install & Run
