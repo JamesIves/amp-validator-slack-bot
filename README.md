@@ -1,7 +1,7 @@
 # AMP Validator Slack Bot ⚡
 [![Build Status](https://travis-ci.org/JamesIves/amp-validator-slack-bot.svg?branch=master)](https://travis-ci.org/JamesIves/amp-validator-slack-bot) [![Issues](https://img.shields.io/github/issues/JamesIves/amp-validator-slack-bot.svg)](https://github.com/JamesIves/amp-validator-slack-bot/issues)
 
-With this Slack bot you can validate [AMP documents](https://www.ampproject.org/) against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/). You can also validate your top performing pages according to Chartbeat on a timer to ensure your most popular content is making its way to the AMP cache.
+With this Slack bot you can validate [AMP documents](https://www.ampproject.org/) against the [Cloudflare AMP validator API](https://blog.cloudflare.com/amp-validator-api/). You can also validate your top performing pages according to [Chartbeat](https://chartbeat.com/) on a timer to ensure your most popular content is making its way to the AMP cache.
 
 ## Installation Steps 💽
 1. Visit your organizations [Slack API settings](https://api.slack.com/) and create a new application with a bot user and retrieve the bots access token.
@@ -22,9 +22,9 @@ $ python app.py
 
 
 ## Chartbeat Integration :chart: 
-> The following steps are optional. 
+> The following steps are optional and only apply if your using Chartbeat.
 
-If you use Chartbeat you can validate pages that are returned from their API endpoints, this can be especially useful for publications which publish a high volume of content. In order for this to work you must provide a valid endpoint found within your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html). 
+If you use [Chartbeat](https://chartbeat.com/) you can validate pages that are returned from their API endpoints, this can be especially useful for publications which publish a high volume of content. In order for this to work you must provide a valid endpoint found within your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html). 
 
 The bot is also capable of automatically validating against this endpoint at intervals. For instance you can give it an interval value of `60`, and a channel name of `#editors`, which would mean that every hour it would automatically validate the pages returned from Chartbeat, and if an error was found it would publish them to that channel.
 
