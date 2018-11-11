@@ -14,7 +14,7 @@ With this Slack bot you can validate [AMP documents](https://www.ampproject.org/
 
 If you'd like to run the application outside of [Heroku](http://heroku.com) you can run add the required [configuration options](#configuration-file_folder) as environment variables and then run the following commands using [Python](https://www.python.org/) and [Pip](https://pypi.org/project/pip/).
 
-```
+```bash
 # Install & Run
 $ pip install -r requirements.txt
 $ python app.py
@@ -22,13 +22,13 @@ $ python app.py
 
 
 ## Chartbeat Integration :chart: 
-> The following steps are optional and only apply if your using Chartbeat.
+> The following steps are optional and only apply if your using Chartbeat analytics.
 
 If you use [Chartbeat](https://chartbeat.com/) you can validate pages that are returned from their API endpoints, this can be especially useful for publications which publish a high volume of content. In order for this to work you must provide a valid endpoint found within your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html). 
 
 The bot is also capable of automatically validating against this endpoint at intervals. For instance you can give it an interval value of `60`, and a channel name of `#editors`, which would mean that every hour it would automatically validate the pages returned from Chartbeat, and if an error was found it would publish them to that channel.
 
-For information on how to set these up please refer to the configuration part of this readme. 
+For a list of requirements on how to set this up please refer to the [configuration part of this readme](#configuration-file_folder). 
 
 
 ## Configuration :file_folder: 
