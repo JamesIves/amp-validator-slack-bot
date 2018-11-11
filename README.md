@@ -37,8 +37,8 @@ The installation will require you to enter a number of API keys and settings as 
 
 | Key  | Value Information | Required |
 | ------------- | ------------- | ------------- |
-| `BOT_ID`  | The ID of your Slack bot user, this is required so the bot knows when a command is directed at it. If you're unsure what your bot ID is you can run `bot_id.py` which will print the ID, you'll need to make sure that the `BOT_NAME` field within the file corresponds with the one you setup in the Slack interface.  | **Yes** |
-| `SLACK_BOT_TOKEN`  | The bot token found within the [Slack API settings](https://api.slack.com/bot-users).  | **Yes** |
+| `BOT_ID`  | The ID of your Slack bot user, this is required so the bot knows when a command is directed at it. If you're unsure what your bot ID is you can run `bot_id.py` which will print the ID, you'll need to make sure that the `BOT_NAME` field within the file corresponds with the one you setup in the Slack interface.  | **Required** |
+| `SLACK_BOT_TOKEN`  | The bot token found within the [Slack API settings](https://api.slack.com/bot-users).  | **Required** |
 | `CHARTBEAT_ENDPOINT`  | If you run Chartbeat analytics you can test your top performing pages against the Chartbeat API. This field requires an endpoint that you can find in your [Chartbeat API settings](http://support.chartbeat.com/docs/api.html), for more information see the Chartbeat part of this readme.   | **Optional**  |
 | `CHARTBEAT_INTERVAL_TIME`  | If you'd like to periodically check the pages returned from the Chartbeat API without any user input you can enter an interval time for it to do so. This will silently check the pages and only alert if an error is found. Requires `CHARTBEAT_OUTPUT_CHANNEL` and `CHARTBEAT_ENDPOINT` to be entered for this to function. Requires a numeric value, for example `60` for 60 minutes. | **Optional** |
 | `CHARTBEAT_OUTPUT_CHANNEL`  | If you'd like the interval check to work you need to enter a channel in order for errors to be logged to. Please see the [Slack API documentation on how to format this](https://api.slack.com/methods/chat.postMessage#channels). | **Optional** |
