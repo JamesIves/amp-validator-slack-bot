@@ -18,6 +18,9 @@ If you'd like to run the application outside of [Heroku](http://heroku.com) you 
 # Install & Run
 $ pip install -r requirements.txt
 $ python app.py
+
+# Tests
+$ python tests.py
 ```
 
 
